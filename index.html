@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container-fluid pt-2 mt-3 pb-5 mb-5">
+            <div class="jumbotron jumbotron-fluid pb-4">
+                    <div class="container text-center">
+                    <h1 class="text-wrap">AnyTime is Train Time</h1>
+                    <p class="lead">make your own time</p>
+                    </div>
+            </div> 
+            <div class="table-responsive-lg">
+                    <table class="table">
+                            <thead class="thead-dark">
+                                <label class="title">Current Train Schedule</label>
+                              <tr>
+                                <th scope="col">Train Name</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Frequency(min)</th>
+                                <th scope="col">Next Arrival</th>
+                                <th scope="col">Minutes Away</th>
+                              </tr>
+                            </thead>
+                            <tbody class="tableContainer" id="tbody">
+                                    <tr>
+                                      <th scope="row" id="th">1</th>
+                                      <td>Mark</td>
+                                      <td>Otto</td>
+                                      <td>@mdo</td>
+                                      <td>comingsoon</td>
+                                    </tr>
+                                    
+                            </tbody>
+                    </table>
+            </div>
+            <form >
+                <label class="title" >Add Train</label>
+                    <div class="form-group pl-2">
+                      <label for="trainName">Train Name</label>
+                      <input type="text" class="form-control" id="trainName">
+                    </div>
+                    <div class="form-group pl-2">
+                            <label for="destination">Destination</label>
+                            <input type="text" class="form-control" id="destination">
+                     </div>
+                     <div class="form-group pl-2">
+                            <label for="firstTrainTime">Frist Train Time(HH:mm military time)</label>
+                            <input type="time" class="form-control" id="firstTrainTime">
+                     </div>
+                     <div class="form-group pl-2">
+                            <label for="frequency">Frequency(min)</label>
+                            <input type="number" class="form-control" id="frequency">
+                          </div>
+                          <button type="submit" class="btn btn-primary pl-2"id="bnt">submit</button>
+          </form>
+        </div>
+  <script src="assets/javascript/app.js"></script> 
+ <!-- moment.js libraty -->
+ <script src="assets/javascript/moment.js">
+
+ </script>
+ <script>
+    moment().format();
+    var d = moment();
+    var firstTrain = document.querySelector("#firstTrainTime").value;
+    console.log(firstTrain);
+</script>
+ 
+ </body>
+</html>

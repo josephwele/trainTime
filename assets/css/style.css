@@ -1,0 +1,25 @@
+body{
+    background-color: rgb(238,238,238);
+}
+.container-fluid{
+    width: 70%;
+    background-color: white;
+    height: auto;
+}
+.jumbotron{
+    background-color:rgb(127,70,44);
+    color: white;
+    font-size: 3em;
+    
+}
+.table,form{
+    border: solid 1.4px rgb(51,122,183);
+}
+.title{
+    background-color: rgb(51,122,183);
+    margin: 0;
+    width: 100%;
+    color: white;
+    font-size: 1.5em;
+    padding-left: 10px;
+}
