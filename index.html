@@ -64,11 +64,95 @@
  <script src="assets/javascript/moment.js">
 
  </script>
+ <!-- firebase link -->
+ <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+
  <script>
-    moment().format();
-    var d = moment();
+   var minutesAway,trainArrival,count=0; 
+document.getElementById("bnt").addEventListener("click",function(event){
+    event.preventDefault();
+    calcMinute();
+    // get input and save to variables
+    var trainName,destination,frequency;
+     trainName = document.querySelector("#trainName").value;
+    destination = document.querySelector("#destination").value;
+     frequency = document.querySelector("#frequency").value;
+     //pretifing the train arrival to human readable code
+     trainArrival = moment(trainArrival).format("HH:mm");
+     // pass all the variables to the tablecreate function 
+    tableCreate(trainName,destination,frequency,trainArrival,minutesAway);
+    setInterval(update,60000);
+    
+
+}
+)
+function tableCreate(t,de,f,ta,m){
+    //save the coming values into an array
+    var arr = [t,de,f,ta,m];
+    //creat table row
+    var tr = document.createElement("tr");
+    //append tr into tbody
+    var tbody = document.getElementById("tbody");
+ 
+    //creat th and append it to the table row
+    var th = document.createElement("th");
+    tr.append(th);
+    th.innerHTML = arr[0];
+    // using for loop to create 4 tds
+    for(let i = 1;i<5;i++){ 
+        var cell = document.createElement("td");
+        cell.innerHTML = arr[i];
+        tr.appendChild(cell);
+        if(i==4){
+         cell.setAttribute("id",count);
+
+        }
+        
+
+    }
+    tbody.appendChild(tr);
+ count++;
+};
+function update(c){
+  var id = count-1;
+  console.log(id);
+ calcMinute();
+ document.getElementById(`${id}`).innerHTML = minutesAway;
+ console.log("call");
+
+}
+
+function calcMinute(){
+  //save current time to variable d 
+  var d = moment();
+    //save the first train time's input
     var firstTrain = document.querySelector("#firstTrainTime").value;
-    console.log(firstTrain);
+    // saving the frequency to fr 
+    fr = document.querySelector("#frequency").value;
+    //assume the train time arrival to be the first train time 
+     trainArrival = moment(firstTrain,"HH:mm");
+    // check whether the current time(now) is before or after the the train arrival
+    while(moment(trainArrival).isBefore(d)){
+      // if the train arrival is before now add frequency minute until next arrival which should be after now
+      trainArrival = moment(trainArrival).add(fr,'m');
+    }
+    // calculate the minutes away from now to next arrival 
+     minutesAway = d.to(trainArrival,'m');
+}
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDIzXe8AJ7GLdRBXptbD4s4gyfWxTQlYII",
+    authDomain: "train-schedule-1ea65.firebaseapp.com",
+    databaseURL: "https://train-schedule-1ea65.firebaseio.com",
+    projectId: "train-schedule-1ea65",
+    storageBucket: "train-schedule-1ea65.appspot.com",
+    messagingSenderId: "388413883"
+  };
+  firebase.initializeApp(config);
+
+
+
 </script>
  
  </body>
