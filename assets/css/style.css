@@ -23,3 +23,8 @@ body{
     font-size: 1.5em;
     padding-left: 10px;
 }
+
+i:hover{
+    display: block;
+    background: red;
+}

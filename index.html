@@ -5,6 +5,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- font awesome library -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
     <div class="container-fluid pt-2 mt-3 pb-5 mb-5">
@@ -52,33 +54,32 @@
                           <button type="submit" class="btn btn-primary pl-2"id="bnt">submit</button>
           </form>
         </div>
-  <script src="assets/javascript/app.js"></script> 
+ 
  <!-- moment.js libraty -->
- <script src="assets/javascript/moment.js">
-
+ <script src="assets/javascript/moment.js"></script>
  </script>
  <!-- firebase link -->
  <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
-
  <script>
    // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDIzXe8AJ7GLdRBXptbD4s4gyfWxTQlYII",
-    authDomain: "train-schedule-1ea65.firebaseapp.com",
-    databaseURL: "https://train-schedule-1ea65.firebaseio.com",
-    projectId: "train-schedule-1ea65",
-    storageBucket: "train-schedule-1ea65.appspot.com",
-    messagingSenderId: "388413883"
+    // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyDKo9dMhVkHwxq6dFD2ZnetFuGgwbJIfVo",
+    authDomain: "traintime-7de9c.firebaseapp.com",
+    databaseURL: "https://traintime-7de9c.firebaseio.com",
+    projectId: "traintime-7de9c",
+    storageBucket: "traintime-7de9c.appspot.com",
+    messagingSenderId: "1021562273092"
   };
   firebase.initializeApp(config);
  var database = firebase.database();
     // initilize variables
    var minutesAway,trainArrival,count=0; 
+   var trainName,destination,frequency,firstTrain;
    // capture button click
 document.getElementById("bnt").addEventListener("click",function(event){
     event.preventDefault();
     // get input and save to variables
-    var trainName,destination,frequency,firstTrain;
      //save the first train time's input
     firstTrain = document.querySelector("#firstTrainTime").value;
     trainName = document.querySelector("#trainName").value;
@@ -92,6 +93,8 @@ document.getElementById("bnt").addEventListener("click",function(event){
        frequency:frequency
       }
      database.ref().push(trainSchedule);
+     
+     })
      // firebase watcher when child added
      database.ref().on("child_added",function(snapShot){
        var sd = snapShot.val();
@@ -100,28 +103,30 @@ document.getElementById("bnt").addEventListener("click",function(event){
        trainName = sd.trainName;
        destination = sd.destination;
        calcMinute(ft,fr);
-       //pretifing the train arrival to human readable code
+        //pretifing the train arrival to human readable code
      trainArrival = moment(trainArrival).format("HH:mm");
-       // pass all the variables to the tablecreate function 
+      // pass all the variables to the tablecreate function 
     tableCreate(trainName,destination,fr,trainArrival,minutesAway);
     setInterval(function(){
-  calcMinute(ft,fr);
-  for(let i=0;i<count;i++)
-  document.getElementById(`${i}`).innerHTML = minutesAway;
-
-    },60000);
-  }
-     )})
+   calcMinute(ft,fr);
+   //pretifing the train arrival to human readable code
+   trainArrival = moment(trainArrival).format("HH:mm");
+  document.getElementById(3).innerHTML = trainArrival;
+  document.getElementById(4).innerHTML = minutesAway;
+      
+  },60000)});
      // function which create table 
 function tableCreate(t,de,f,ta,m){
     //save the coming values into an array
     var arr = [t,de,f,ta,m];
     //creat table row
     var tr = document.createElement("tr");
+   
+    tr.appendChild;
     //append tr into tbody
     var tbody = document.getElementById("tbody");
  
-    //creat th and append it to the table row
+    //creat th and append it to the 
     var th = document.createElement("th");
     tr.append(th);
     th.innerHTML = arr[0];
@@ -130,13 +135,11 @@ function tableCreate(t,de,f,ta,m){
         var cell = document.createElement("td");
         cell.innerHTML = arr[i];
         tr.appendChild(cell);
-        if(i==4){
-         cell.setAttribute("id",count);
+         cell.setAttribute("id",i);
+        }
+        tbody.appendChild(tr);}
+    
 
-        }}
-    tbody.appendChild(tr);
- count++;
-};
 // function to calculate minutes
 function calcMinute(ft,fr){
   //save current time to variable d 
@@ -150,6 +153,8 @@ function calcMinute(ft,fr){
     }
     // calculate the minutes away from now to next arrival 
      minutesAway = d.to(trainArrival,'m');
+
+     
 }
 </script>
  </body>
